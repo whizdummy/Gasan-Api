@@ -19,7 +19,9 @@ class MunicipalityController extends Controller
     public function index()
     {
         return response()->json(array(
-            'municipality_details'  => Municipality::first()
+            'status'    => 'S',
+            'message'   => 'Successfully retrieved',
+            'data'      => Municipality::first()
         ));
     }
 
@@ -41,9 +43,7 @@ class MunicipalityController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json(array(
-            'message'   => 'POST FKJDKLJFDKJFKLDS'
-        ));
+        // 
     }
 
     /**
@@ -54,9 +54,7 @@ class MunicipalityController extends Controller
      */
     public function show($id)
     {
-        return response()->json(array(
-            'message'   => 'SHOW ME'
-        ));
+        // 
     }
 
     /**
@@ -98,7 +96,8 @@ class MunicipalityController extends Controller
         } else {
             $jsonValue = array(
                 'status'    => 'F',
-                'message'   => 'Municipality not found'
+                'message'   => 'Municipality not found',
+                'data'      => null
             );
         }
 
