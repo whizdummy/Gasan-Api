@@ -144,7 +144,12 @@ class AnnouncementController extends Controller
 
         switch ($queryType) {
             case 'index':
-                $queryResult = $query->get();
+                $queryResult = $query->where(
+                        'is_lapsed',
+                        '=',
+                        0
+                    )
+                    ->get();
                 break;
             
             case 'show':
