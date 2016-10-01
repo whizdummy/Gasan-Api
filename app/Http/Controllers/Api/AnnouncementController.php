@@ -16,12 +16,12 @@ class AnnouncementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return response()->json(array(
             'status'    => 'S',
             'message'   => 'Successfully retrieved',
-            'data'      => $this->getAnnouncementQuery('index', null)
+            'data'      => $this->getAnnouncementQuery('index', null, $request)
         ));
     }
 
@@ -69,7 +69,7 @@ class AnnouncementController extends Controller
         return response()->json(array(
             'status'    => 'S',
             'message'   => 'Successfully retrieved',
-            'data'      => $this->getAnnouncementQuery('show', $id)
+            'data'      => $this->getAnnouncementQuery('show', $id, null)
         ));
     }
 
@@ -128,26 +128,24 @@ class AnnouncementController extends Controller
         ));
     }
 
-    function getAnnouncementQuery($queryType, $id) {
+    function getAnnouncementQuery($queryType, $id, Request $request) {
         $query = Announcement::select(
             'id',
             'municipality_id',
             'title',
             'description',
-            'duration'
-        )
-        ->where(
+            'duration',
+            'updated_at'
+        )->where(
             'is_lapsed',
             '=',
-            0
+            $request->is_lapsed
         );
 
         switch ($queryType) {
             case 'index':
-                $queryResult = $query->where(
-                        'is_lapsed',
-                        '=',
-                        0
+                $queryResult = $query->orderBy(
+                        'updated_at'
                     )
                     ->get();
                 break;
