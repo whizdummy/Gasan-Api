@@ -144,10 +144,20 @@ class AnnouncementController extends Controller
 
         switch ($queryType) {
             case 'index':
-                $queryResult = $query->orderBy(
-                        'updated_at'
+                if($request->take_number != null) {
+                    $queryResult = $query->orderBy(
+                        'updated_at',
+                        'desc'
+                    )
+                    ->take($request->take_number)
+                    ->get();
+                } else {
+                    $queryResult = $query->orderBy(
+                        'updated_at',
+                        'desc'
                     )
                     ->get();
+                }
                 break;
             
             case 'show':
