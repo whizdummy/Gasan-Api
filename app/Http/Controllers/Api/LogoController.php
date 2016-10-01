@@ -18,18 +18,23 @@ class LogoController extends Controller
      */
     public function index()
     {
-        $municipality = Municipality::first();
+        $municipality = Municipality::select(
+                'name',
+                'image_path'
+            )
+            ->first();
 
         if($municipality->image_path != null) {
             $jsonValue = array(
                 'status'    => 'S',
                 'message'   => 'Image found',
-                'data'     => $municipality
+                'data'      => $municipality
             );
         } else {
             $jsonValue = array(
                 'status'    => 'F',
-                'message'   => 'Image not found'
+                'message'   => 'Image not found',
+                'data'      => null
             );
         }
 
@@ -76,13 +81,15 @@ class LogoController extends Controller
             } else {
                 $jsonValue = array(
                     'status'    => 'F',
-                    'message'   => 'Image not uploaded'
+                    'message'   => 'Image not uploaded',
+                    'data'      => null
                 );
             }
         } else {
             $jsonValue = array(
                 'status'    => 'F',
-                'message'   => 'Municipality not found'
+                'message'   => 'Municipality not found',
+                'data'      => null
             );
         }
 
